@@ -14,6 +14,7 @@
 #include <QList>
 #include <QMimeData>
 #include <QDateTime>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -35,6 +36,8 @@ private slots:
     void on_base64Encode_clicked();
 
     void on_selectImage_clicked();
+
+    void on_encodeFromClipboard_clicked();
 
 private:
     Ui::Widget *ui;

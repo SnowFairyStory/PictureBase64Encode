@@ -100,3 +100,25 @@ void Widget::ImgToBase64()
         ui->imgLabel->setPixmap(QPixmap::fromImage(imageLabel));
     }
 }
+
+void Widget::on_encodeFromClipboard_clicked()
+{
+    QClipboard *clipboard = QApplication::clipboard();   //获取系统剪贴板指针
+    QImage image =  clipboard->image(); // 获取图片
+
+    QString imgTemplate = "<img src=\"data:image/png;base64,%2\">";
+    QByteArray ba;
+    QBuffer buf(&ba);
+    image.save(&buf, "png");
+    QByteArray bytes = ba.toBase64();
+    buf.close();
+
+    QString b64 = imgTemplate.arg(bytes.data());
+
+    // 设置剪切板内容
+    clipboard->setText(b64);
+    // 更新状态消息
+    ui->status->setText("成功读取剪切板并转换" + this->getCurrentTime());
+    // 设置label
+    ui->imgLabel->setText(b64);
+}
